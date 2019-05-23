@@ -1,0 +1,2 @@
+modsecurity <%= node[cookbook_name]['modsecurity']['enabled'] ? 'on' : 'off' %>;
+modsecurity_rules_file <%= node[cookbook_name]['modsecurity']['config_file'] %>;
