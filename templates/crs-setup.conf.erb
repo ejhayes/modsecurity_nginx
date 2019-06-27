@@ -491,74 +491,85 @@ SecDefaultAction "phase:2,log,auditlog,pass"
 # Default: unlimited
 # Example: 255
 # Uncomment this rule to set a limit.
-#SecAction \
-# "id:900300,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:tx.max_num_args=255"
+<% if node[cookbook_name]['owasp_crs']['limits']['max_num_args'] %>
+SecAction \
+ "id:900300,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.max_num_args=<%= node[cookbook_name]['owasp_crs']['limits']['max_num_args'] %>"
+<% end %>
 
 # Block request if the length of any argument name is too high
 # Default: unlimited
 # Example: 100
 # Uncomment this rule to set a limit.
-#SecAction \
-# "id:900310,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:tx.arg_name_length=100"
+<% if node[cookbook_name]['owasp_crs']['limits']['max_num_args'] %>
+SecAction \
+ "id:900310,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.arg_name_length=<%= node[cookbook_name]['owasp_crs']['limits']['max_num_args'] %>"
+<% end %>
 
 # Block request if the length of any argument value is too high
 # Default: unlimited
 # Example: 400
 # Uncomment this rule to set a limit.
-#SecAction \
-# "id:900320,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:tx.arg_length=400"
+<% if node[cookbook_name]['owasp_crs']['limits']['arg_length'] %>
+SecAction \
+ "id:900320,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.arg_length=<%= node[cookbook_name]['owasp_crs']['limits']['arg_length'] %>"
+<% end %>
 
 # Block request if the total length of all combined arguments is too high
 # Default: unlimited
 # Example: 64000
 # Uncomment this rule to set a limit.
-#SecAction \
-# "id:900330,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:tx.total_arg_length=64000"
+<% if node[cookbook_name]['owasp_crs']['limits']['total_arg_length'] %>
+SecAction \
+ "id:900330,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.total_arg_length=<%= node[cookbook_name]['owasp_crs']['limits']['total_arg_length'] %>"
+<% end %>
 
 # Block request if the file size of any individual uploaded file is too high
 # Default: unlimited
 # Example: 1048576
 # Uncomment this rule to set a limit.
-#SecAction \
-# "id:900340,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:tx.max_file_size=1048576"
+<% if node[cookbook_name]['owasp_crs']['limits']['max_file_size'] %>
+SecAction \
+ "id:900340,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.max_file_size=<%= node[cookbook_name]['owasp_crs']['limits']['max_file_size'] %>"
+<% end %>
 
 # Block request if the total size of all combined uploaded files is too high
 # Default: unlimited
 # Example: 1048576
 # Uncomment this rule to set a limit.
-#SecAction \
-# "id:900350,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:tx.combined_file_sizes=1048576"
-
+<% if node[cookbook_name]['owasp_crs']['limits']['combined_file_sizes'] %>
+SecAction \
+ "id:900350,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.combined_file_sizes=<%= node[cookbook_name]['owasp_crs']['limits']['combined_file_sizes'] %>"
+<% end %>
 
 #
 # -- [[ Easing In / Sampling Percentage ]] -------------------------------------
@@ -647,7 +658,9 @@ SecAction "id:900500,\
 # Uncomment this rule to use this feature:
 #
 #SecGeoLookupDB util/geo-location/GeoIP.dat
-
+<% if node[cookbook_name]['owasp_crs']['geoip']['enabled'] %>
+SecGeoLookupDB <%= node[cookbook_name]['owasp_crs']['geoip']['lookup_db'] %>
+<% end %>
 
 #
 # -=[ Block Countries ]=-
@@ -669,14 +682,15 @@ SecAction "id:900500,\
 #
 # Uncomment this rule to use this feature:
 #
-#SecAction \
-# "id:900600,\
-#  phase:1,\
-#  nolog,\
-#  pass,\
-#  t:none,\
-#  setvar:'tx.high_risk_country_codes='"
-
+<% if node[cookbook_name]['owasp_crs']['geoip']['enabled'] %>
+SecAction \
+ "id:900600,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:'tx.high_risk_country_codes=<%= node[cookbook_name]['owasp_crs']['geoip']['high_risk_country_codes'].join(' ') %>'"
+<% end %>
 
 #
 # -- [[ Anti-Automation / DoS Protection ]] ------------------------------------

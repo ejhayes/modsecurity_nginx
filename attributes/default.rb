@@ -22,6 +22,20 @@ default[cookbook_name]['owasp_crs']['project_honeypot']['block_suspicious_ip'] =
 default[cookbook_name]['owasp_crs']['project_honeypot']['block_harvester_ip'] = true
 default[cookbook_name]['owasp_crs']['project_honeypot']['block_spammer_ip'] = true
 
+# geoip restrictions
+default[cookbook_name]['owasp_crs']['geoip']['enabled'] = false
+default[cookbook_name]['owasp_crs']['geoip']['lookup_db'] = ''
+default[cookbook_name]['owasp_crs']['geoip']['high_risk_country_codes'] = []
+
+# argument limits
+default[cookbook_name]['owasp_crs']['limits']['max_num_args'] = nil
+default[cookbook_name]['owasp_crs']['limits']['arg_name_length'] = nil
+default[cookbook_name]['owasp_crs']['limits']['arg_length'] = nil
+default[cookbook_name]['owasp_crs']['limits']['total_arg_length'] = nil
+default[cookbook_name]['owasp_crs']['limits']['max_file_size'] = nil
+default[cookbook_name]['owasp_crs']['limits']['combined_file_sizes'] = nil
+
+
 # owasp common ruleset (CRS)
 default[cookbook_name]['owasp_crs']['repo'] = 'https://github.com/SpiderLabs/owasp-modsecurity-crs'
 default[cookbook_name]['owasp_crs']['branch'] = 'v3.1.0/dev'
